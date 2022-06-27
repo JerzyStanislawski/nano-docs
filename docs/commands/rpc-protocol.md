@@ -369,12 +369,19 @@ Returns a list of pairs of account and block hash representing the head block fo
 
 ### accounts_pending  
 
+Deprecated in V23.0+. Replaced by [accounts_receivable](#accounts_receivable)
+
+---
+
+### accounts_receivable  
+
+_since V23.0, use [accounts_pending](#accounts_pending) for V22.1 and below_  
 Returns a list of confirmed block hashes which have not yet been received by these **accounts**  
 
 **Request:**
 ```json
 {
-  "action": "accounts_pending",
+  "action": "accounts_receivable",
   "accounts": ["nano_1111111111111111111111111111111111111111111111111117353trpda", "nano_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"],
   "count": "1"
 }
@@ -395,7 +402,7 @@ Number (128 bit, decimal). Returns a list of receivable block hashes with amount
 **Request:**
 ```json
 {
-  "action": "accounts_pending",
+  "action": "accounts_receivable",
   "accounts": ["nano_1111111111111111111111111111111111111111111111111117353trpda", "nano_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"],
   "count": "1",
   "threshold": "1000000000000000000000000"
@@ -421,7 +428,7 @@ Boolean, false by default. Returns a list of receivable block hashes with amount
 **Request:**
 ```json
 {
-  "action": "accounts_pending",
+  "action": "accounts_receivable",
   "accounts": ["nano_1111111111111111111111111111111111111111111111111117353trpda", "nano_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"],
   "count": "1",
   "source": "true"
@@ -454,7 +461,7 @@ Boolean, false by default. Include active (not confirmed) blocks
 **Request:**
 ```json
 {
-  "action": "accounts_pending",
+  "action": "accounts_receivable",
   "accounts": ["nano_1111111111111111111111111111111111111111111111111117353trpda", "nano_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3"],
   "count": "1",
   "include_active": "true"
@@ -463,8 +470,13 @@ Boolean, false by default. Include active (not confirmed) blocks
 
 **Optional "sorting"**
 
-_version 19.0+_    
 Boolean, false by default. Additionally sorts each account's blocks by their amounts in descending order.
+
+_version 24.0+_   
+If used with "count" returns the absolute sorted values.
+
+_version 19.0+_    
+If used with "count" only sorts relative to the first receivable entries found up to count so not necessarily the ones with the largest receivable balance.  
 
 **Optional "include_only_confirmed"**
 
